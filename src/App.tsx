@@ -3,7 +3,27 @@ import './App.css';
 
 const logo = require('./logo.svg');
 
-class App extends React.Component {
+export interface IAppState {
+  counter: number;
+}
+
+export interface ComponentProps {
+  test: number;
+}
+
+class App extends React.Component<{}, IAppState> {
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      counter: 0,
+    };
+  }
+  increment = () => {
+    const { counter: existingCounter } = this.state;
+    this.setState({
+      counter: existingCounter + 1,
+    });
+  }
   helloWorld(userName: string): void {
     alert(`Testing ${userName}`);
   }
@@ -14,8 +34,9 @@ class App extends React.Component {
           <img src={logo} className="App-logo" alt="logo" onClick={() => this.helloWorld('Shobhit')} />
           <h1 className="App-title">Welcome to React</h1>
         </header>
+        <button onClick={this.increment}>INC</button>
         <p className="App-intro">
-          To get started, edit <code>src/App.tsx</code> and save to reload.
+          {this.state.counter}
         </p>
       </div>
     );
